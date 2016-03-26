@@ -95,3 +95,6 @@ $ npm run package-all
 MIT © [Jan Nicklas](https://github.com/jantimon)
 
 Based on [electron-react-boilerplate](https://github.com/chentsulin/electron-react-boilerplate/) licensed under MIT © [C. T. Lin](https://github.com/chentsulin)
+
+Icons:
+http://www.flaticon.com/packs/smart-home-system by Freepik License: Flaticon Basic License 

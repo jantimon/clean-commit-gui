@@ -12,6 +12,9 @@ module.exports = {
     }, {
       test: /\.json$/,
       loader: 'json-loader'
+    }, {
+      test: /\.svg$/,
+      loader: 'url-loader?limit=10000'
     }]
   },
   output: {

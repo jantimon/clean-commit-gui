@@ -1,0 +1,32 @@
+.default {
+  color: #333;
+  font-size: 14px;
+  padding: 0.5em 0.5em 0.6em;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.title {
+  display: inline-block;
+  vertical-align: bottom;
+  font-size: 0.8em;
+  margin-left: 0.5em;
+  color: #666;
+  font-family: monaco, Consolas, 'Lucida Console', monospace;
+  cursor: default;
+}
+
+.isAdded {
+  color: #20B048;
+}
+.isDeleted {
+  color: #999999;
+}
+.isModified {
+  color: #D68806;
+}
+.isRenamed {
+  color: #D68806;
+}
+.isUntracked {
+  color: #2048B0;
+}

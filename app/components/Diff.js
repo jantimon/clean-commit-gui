@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import PatchTitle from './PatchTitle';
+import styles from './Diff.scss';
 
 class DiffView extends Component {
   static propTypes = {
@@ -11,10 +11,10 @@ class DiffView extends Component {
     const { diff } = this.props;
     const patches = diff.map((patch) => {
       const key = (patch.isUntracked() ? 'T' : 'U') + ' ' + patch.newFile().path();
-      return (<PatchTitle patch={patch} key={key} />)
+      return (<PatchTitle patch={patch} key={key} />);
     });
     return (
-      <div>
+      <div className={styles.default}>
         {patches}
       </div>
     );

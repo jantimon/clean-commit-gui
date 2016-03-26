@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './PatchTitle.css';
+import styles from './PatchTitle.scss';
 import path from 'path';
+import Icons from '../icons/hand-drawn';
 
 class PatchTitle extends Component {
   static propTypes = {
@@ -9,26 +10,28 @@ class PatchTitle extends Component {
 
   render() {
     const { patch } = this.props;
-    const modifiers = [
-      'isAdded',
-      'isConflicted',
-      'isCopied',
-      'isDeleted',
-      'isIgnored',
-      'isModified',
-      'isRenamed',
-      'isTypeChange',
-      'isUnmodified',
-      'isUnreadable',
-      'isUntracked'
-    ];
-    const activeModifiers = modifiers.filter((modifier) => patch[modifier]());
-    const modfierStyles = activeModifiers.map((modifier) => styles[modifier]);
-    const className = modfierStyles.join(' ');
+    const iconMapping = {
+      isAdded: Icons.new,
+      isDeleted: Icons.removed,
+      isModified: Icons.modified,
+      isRenamed: Icons.moved,
+      isUntracked: Icons.untracked
+    };
+
+    let icon = '';
+    let activeModifier = '';
+    Object.keys(iconMapping).forEach((modifier) => {
+      if (patch[modifier]()) {
+        activeModifier = styles[modifier];
+        icon = React.createElement(iconMapping[modifier], { key: modifier });
+      }
+    });
+
     const filePath = patch.newFile().path();
     const baseName = path.basename(filePath);
+    const className = `${styles.default} ${activeModifier}`;
     return (<div className={className}>
-        <span>{baseName}</span>
+        {icon}<span className={styles.title}>{baseName}</span>
       </div>);
   }
 }
