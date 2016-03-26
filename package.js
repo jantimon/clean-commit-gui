@@ -101,9 +101,9 @@ function pack(plat, arch, cb) {
     prune: true,
     version: pkg.engines.electron,
     'app-version': pkg.version || DEFAULT_OPTS.version,
+    'extend-info': `${__dirname}/resources/osx/Info.plist`,
     out: `release/${plat}-${arch}`
   });
-
   packager(opts, cb);
 }
 
