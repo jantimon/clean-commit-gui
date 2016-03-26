@@ -11,6 +11,7 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import syncGitWithStore from './utils/GitClient';
 import './app.global.css';
+import './utils/dragndrop';
 
 const store = configureStore();
 const query = queryString.parse(document.location.search);

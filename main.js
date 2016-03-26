@@ -3,6 +3,8 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
+const fs = require('fs');
+const path = require('path');
 const electron = require('electron');
 const queryString = require('query-string');
 const minimist = require('minimist');
@@ -13,6 +15,7 @@ const crashReporter = electron.crashReporter;
 const shell = electron.shell;
 let menu;
 let template;
+let initialPath;
 let mainWindow = null;
 
 crashReporter.start();
@@ -239,6 +242,15 @@ app.on('ready', () => {
   }
 });
 
+app.on('open-file', (event, openFilePath) => {
+  if (initialPath !== undefined) {
+    return;
+  }
+  initialPath = fs.lstatSync(openFilePath).isDirectory()
+    ? openFilePath
+    : path.dirname(openFilePath);
+});
+
 
 function getApplicationQueryString() {
   const applicationArguments = minimist(process.argv.slice(1), {
@@ -247,7 +259,7 @@ function getApplicationQueryString() {
     }
   });
   // Get the git directory
-  applicationArguments.git = applicationArguments._[0] || '.';
+  applicationArguments.git = initialPath || applicationArguments._[0] || '.';
   delete(applicationArguments._);
   return queryString.stringify(applicationArguments);
 }
