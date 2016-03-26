@@ -4,9 +4,13 @@ import NodeGit from 'nodegit';
 import { Diff } from 'nodegit';
 
 export default function syncGitWithStore({ store, path }) {
-  const repo = NodeGit.Repository.open(path);
   store.dispatch(replaceDiff([]));
-  return pushDiffIntoStore(repo, store);
+  try {
+    const repo = NodeGit.Repository.openExt(path, 0, '');
+    return pushDiffIntoStore(repo, store);
+  } catch (e) {
+    console.log('Failed to open repository ', path, e);
+  }
 }
 
 async function pushDiffIntoStore(repo, store) {

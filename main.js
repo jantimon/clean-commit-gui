@@ -259,7 +259,18 @@ function getApplicationQueryString() {
     }
   });
   // Get the git directory
-  applicationArguments.git = initialPath || applicationArguments._[0] || '.';
+  let gitBaseDirectory = initialPath || applicationArguments._[0];
   delete(applicationArguments._);
+  // Fallback if no git repostiory was passed
+  if (!gitBaseDirectory) {
+    gitBaseDirectory = '.';
+    // If no cwd could be estimated use the app path
+    // this happens if the app is opened by double click
+    if (applicationArguments.cwd === '/') {
+      applicationArguments.cwd = app.getAppPath();
+    }
+  }
+  applicationArguments.git = gitBaseDirectory;
+
   return queryString.stringify(applicationArguments);
 }
