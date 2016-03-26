@@ -5,11 +5,12 @@ import Icons from '../icons/hand-drawn';
 
 class PatchTitle extends Component {
   static propTypes = {
-    patch: PropTypes.object.isRequired
+    patch: PropTypes.object.isRequired,
+    workdir: PropTypes.string.isRequired
   };
 
   render() {
-    const { patch } = this.props;
+    const { patch, workdir } = this.props;
     const iconMapping = {
       isAdded: Icons.new,
       isDeleted: Icons.removed,
@@ -28,10 +29,10 @@ class PatchTitle extends Component {
     });
 
     const filePath = patch.newFile().path();
-    const baseName = path.basename(filePath);
+    const title = path.relative(workdir, filePath);
     const className = `${styles.default} ${activeModifier}`;
     return (<div className={className}>
-        {icon}<span className={styles.title}>{baseName}</span>
+        {icon}<span className={styles.title}>{title}</span>
       </div>);
   }
 }

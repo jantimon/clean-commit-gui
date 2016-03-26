@@ -4,7 +4,7 @@ import NodeGit from 'nodegit';
 import { Diff } from 'nodegit';
 
 export default function syncGitWithStore({ store, path }) {
-  store.dispatch(replaceDiff([]));
+  store.dispatch(replaceDiff(null, []));
   try {
     const repo = NodeGit.Repository.openExt(path, 0, '');
     return pushDiffIntoStore(repo, store);
@@ -18,5 +18,5 @@ async function pushDiffIntoStore(repo, store) {
     flags: Diff.OPTION.INCLUDE_UNTRACKED |
            Diff.OPTION.RECURSE_UNTRACKED_DIRS
   });
-  store.dispatch(replaceDiff(await diff.patches()));
+  store.dispatch(replaceDiff(await repo, await diff.patches()));
 }

@@ -4,14 +4,16 @@ import styles from './Diff.scss';
 
 class DiffView extends Component {
   static propTypes = {
-    diff: PropTypes.array.isRequired
+    diff: PropTypes.array.isRequired,
+    repository: PropTypes.object.isRequired,
   };
 
   render() {
-    const { diff } = this.props;
+    const { diff, repository } = this.props;
+    const workdir = repository ? repository.workdir() : '';
     const patches = diff.map((patch) => {
       const key = (patch.isUntracked() ? 'T' : 'U') + ' ' + patch.newFile().path();
-      return (<PatchTitle patch={patch} key={key} />);
+      return (<PatchTitle patch={patch} workdir={workdir} key={key} />);
     });
     return (
       <div className={styles.default}>
