@@ -4,20 +4,42 @@ import styles from './Diff.scss';
 
 class DiffView extends Component {
   static propTypes = {
-    diff: PropTypes.array.isRequired,
-    repository: PropTypes.object.isRequired,
+    staged: PropTypes.array,
+    unstaged: PropTypes.array
   };
 
-  render() {
-    const { diff, repository } = this.props;
-    const workdir = repository ? repository.workdir() : '';
-    const patches = diff.map((patch) => {
-      const key = (patch.isUntracked() ? 'T' : 'U') + ' ' + patch.newFile().path();
-      return (<PatchTitle patch={patch} workdir={workdir} key={key} />);
+  getStagedPatches() {
+    const { staged } = this.props;
+    if (!staged) {
+      return [];
+    }
+    return staged.map((patch) => {
+      const key = patch.newFile().path();
+      return (<PatchTitle patch={patch} key={key} />);
     });
+  }
+
+  getUnstagedPatches() {
+    const { unstaged } = this.props;
+    if (!unstaged) {
+      return [];
+    }
+    return unstaged.map((patch) => {
+      const key = patch.newFile().path();
+      return (<PatchTitle patch={patch} key={key} />);
+    });
+  }
+
+  render() {
     return (
-      <div className={styles.default}>
-        {patches}
+      <div>
+        <div className={styles.default}>
+          {this.getStagedPatches()}
+        </div>
+        <hr/>
+        <div className={styles.default}>
+          {this.getUnstagedPatches()}
+        </div>
       </div>
     );
   }

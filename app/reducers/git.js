@@ -4,7 +4,8 @@ export default function git(state = {}, action) {
   switch (action.type) {
     case REPLACE_DIFF:
       return {
-        diff: action.diff,
+        staged: action.staged,
+        unstaged: action.unstaged,
         repository: action.repository
       };
     default:

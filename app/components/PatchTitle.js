@@ -1,16 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './PatchTitle.scss';
-import path from 'path';
 import Icons from '../icons/hand-drawn';
 
 class PatchTitle extends Component {
   static propTypes = {
     patch: PropTypes.object.isRequired,
-    workdir: PropTypes.string.isRequired
   };
 
   render() {
-    const { patch, workdir } = this.props;
+    const { patch } = this.props;
     const iconMapping = {
       isAdded: Icons.new,
       isDeleted: Icons.removed,
@@ -29,10 +27,9 @@ class PatchTitle extends Component {
     });
 
     const filePath = patch.newFile().path();
-    const title = path.relative(workdir, filePath);
     const className = `${styles.default} ${activeModifier}`;
     return (<div className={className}>
-        {icon}<span className={styles.title}>{title}</span>
+        {icon}<span className={styles.title}>{filePath}</span>
       </div>);
   }
 }
