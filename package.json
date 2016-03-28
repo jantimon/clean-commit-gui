@@ -97,9 +97,11 @@
     "webpack-target-electron-renderer": "^0.4.0"
   },
   "dependencies": {
+    "chokidar": "^1.4.3",
     "css-modules-require-hook": "^4.0.0",
     "electron-debug": "^0.5.2",
     "font-awesome": "^4.4.0",
+    "gitignore-globs": "^0.1.1",
     "minimist": "^1.2.0",
     "nodegit": "^0.11.9",
     "postcss": "^5.0.18",

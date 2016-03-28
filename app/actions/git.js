@@ -4,6 +4,7 @@ export const WORKING_DIRECTORY_FAILED = 'WORKING_DIRECTORY_FAILED';
 export const STAGED_DIFF_CHANGED = 'STAGED_DIFF_CHANGED';
 export const UNSTAGED_DIFF_CHANGED = 'UNSTAGED_DIFF_CHANGED';
 
+import { watchRepository } from '../utils/watchFiles';
 import { openRepository, getStagedChanges, getUnstagedChanges } from '../utils/GitClient';
 
 /**
@@ -11,9 +12,9 @@ import { openRepository, getStagedChanges, getUnstagedChanges } from '../utils/G
  */
 export function setWorkingDirectory(workingDirectory) {
   return async (dispatch) => {
+    let repository;
     // Dispatch start of asyncronous opening of the repository
     dispatch({ type: WORKING_DIRECTORY_RESOLVING, action: { workingDirectory } });
-    let repository;
     try {
       // Try to access the repository and to receive the git informations
       repository = await openRepository(workingDirectory);
@@ -40,5 +41,6 @@ export function setRepository(repository) {
     // Dispatch events
     dispatch({ type: STAGED_DIFF_CHANGED, stagedChanges: await stagedChangesPromise });
     dispatch({ type: UNSTAGED_DIFF_CHANGED, unstagedChanges: await unstagedChangesPromise });
+    watchRepository(repository.workdir())(dispatch);
   };
 }
