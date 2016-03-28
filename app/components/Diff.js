@@ -10,9 +10,6 @@ class DiffView extends Component {
 
   getStagedPatches() {
     const { staged } = this.props;
-    if (!staged) {
-      return [];
-    }
     return staged.map((patch) => {
       const key = patch.newFile().path();
       return (<PatchTitle patch={patch} key={key} />);
@@ -21,9 +18,6 @@ class DiffView extends Component {
 
   getUnstagedPatches() {
     const { unstaged } = this.props;
-    if (!unstaged) {
-      return [];
-    }
     return unstaged.map((patch) => {
       const key = patch.newFile().path();
       return (<PatchTitle patch={patch} key={key} />);

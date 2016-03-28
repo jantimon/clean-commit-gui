@@ -9,18 +9,15 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import queryString from 'query-string';
 import routes from './routes';
 import configureStore from './store/configureStore';
-import syncGitWithStore from './utils/GitClient';
+import { setWorkingDirectory } from './actions/git';
 import './app.global.css';
-import './utils/dragndrop';
+import { attachDragAndDrop } from './utils/dragndrop';
 
 const store = configureStore();
 const query = queryString.parse(document.location.search);
-syncGitWithStore({ store, path: path.resolve(query.cwd, query.git) });
+store.dispatch(setWorkingDirectory(path.resolve(query.cwd, query.git)));
 const history = syncHistoryWithStore(hashHistory, store);
-
-var d = document.createElement('p');
-d.innerHTML = '<pre>' + path.resolve(query.cwd, query.git) + '</pre>';
-document.body.appendChild(d);
+attachDragAndDrop(store);
 
 render(
   <Provider store={store}>

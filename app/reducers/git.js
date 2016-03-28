@@ -1,13 +1,21 @@
-import { REPLACE_DIFF } from '../actions/git';
+import {
+  WORKING_DIRECTORY_RESOLVING,
+  WORKING_DIRECTORY_CHANGED,
+  STAGED_DIFF_CHANGED,
+  UNSTAGED_DIFF_CHANGED
+} from '../actions/git';
 
-export default function git(state = {}, action) {
+export default function git(state = { staged: [], unstaged: [], resolving: false }, action) {
+  console.log(state);
   switch (action.type) {
-    case REPLACE_DIFF:
-      return {
-        staged: action.staged,
-        unstaged: action.unstaged,
-        repository: action.repository
-      };
+    case STAGED_DIFF_CHANGED:
+      return Object.assign({}, state, { staged: action.stagedChanges });
+    case UNSTAGED_DIFF_CHANGED:
+      return Object.assign({}, state, { unstaged: action.unstagedChanges });
+    case WORKING_DIRECTORY_RESOLVING:
+      return Object.assign({}, state, { resolving: true });
+    case WORKING_DIRECTORY_CHANGED:
+      return Object.assign({}, state, { resolving: false, repository: action.repository });
     default:
       return state;
   }
