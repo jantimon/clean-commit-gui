@@ -37,6 +37,9 @@ app.on('ready', () => {
     mainWindow = null;
   });
 
+  mainWindow.on('focus', () => triggerEvent(mainWindow, 'electron-focus'));
+  mainWindow.on('blur', () => triggerEvent(mainWindow, 'electron-blur'));
+
   if (process.env.NODE_ENV === 'development') {
     mainWindow.openDevTools();
   }
@@ -243,14 +246,33 @@ app.on('ready', () => {
 });
 
 app.on('open-file', (event, openFilePath) => {
-  if (initialPath !== undefined) {
-    return;
-  }
-  initialPath = fs.lstatSync(openFilePath).isDirectory()
+  const directory = fs.lstatSync(openFilePath).isDirectory()
     ? openFilePath
     : path.dirname(openFilePath);
+
+  // Store path if app was started by dragging a folder on it
+  if (initialPath === undefined) {
+    initialPath = directory;
+    return;
+  }
+
+  // Tell the application that the user dragged a folder on the running application
+  triggerEvent(mainWindow, 'electron-open-directory', { directory });
 });
 
+/**
+ * Send an event to the react application
+ */
+function triggerEvent(targetWindow, eventName, eventData) {
+  targetWindow.webContents.executeJavaScript(`
+    (function() {
+      var event = new CustomEvent(${JSON.stringify(eventName)},
+        ${JSON.stringify(eventData)}
+      );
+      document.body.dispatchEvent(event);
+    })()
+  `);
+}
 
 function getApplicationQueryString() {
   const applicationArguments = minimist(process.argv.slice(1), {

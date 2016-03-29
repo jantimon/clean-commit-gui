@@ -4,8 +4,8 @@ export const WORKING_DIRECTORY_FAILED = 'WORKING_DIRECTORY_FAILED';
 export const STAGED_DIFF_CHANGED = 'STAGED_DIFF_CHANGED';
 export const UNSTAGED_DIFF_CHANGED = 'UNSTAGED_DIFF_CHANGED';
 
-import { watchRepository } from '../utils/watchFiles';
-import { openRepository, getStagedChanges, getUnstagedChanges } from '../utils/GitClient';
+import { watchRepository } from '../utils/watchRepository';
+import { openRepository, getWorkingDirectoryChanges } from '../utils/GitClient';
 
 /**
  * Set a new path to a git repostiory or a sub folder of a git repository
@@ -35,12 +35,10 @@ export function setWorkingDirectory(workingDirectory) {
  */
 export function setRepository(repository) {
   return async (dispatch) => {
-    // Get staged changes and unstaged changes in parallel
-    const stagedChangesPromise = getStagedChanges(repository);
-    const unstagedChangesPromise = getUnstagedChanges(repository);
-    // Dispatch events
-    dispatch({ type: STAGED_DIFF_CHANGED, stagedChanges: await stagedChangesPromise });
-    dispatch({ type: UNSTAGED_DIFF_CHANGED, unstagedChanges: await unstagedChangesPromise });
-    watchRepository(repository.workdir())(dispatch);
+    // Watch repository and set it on change
+    watchRepository(repository, ({ stagedChanges, unstagedChanges }) => {
+      dispatch({ type: STAGED_DIFF_CHANGED, stagedChanges });
+      dispatch({ type: UNSTAGED_DIFF_CHANGED, unstagedChanges });
+    });
   };
 }

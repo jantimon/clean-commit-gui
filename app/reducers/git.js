@@ -6,7 +6,6 @@ import {
 } from '../actions/git';
 
 export default function git(state = { staged: [], unstaged: [], resolving: false }, action) {
-  console.log(state);
   switch (action.type) {
     case STAGED_DIFF_CHANGED:
       return Object.assign({}, state, { staged: action.stagedChanges });
