@@ -55,5 +55,5 @@ export default class DiffListEntry extends Component {
   }
 
   styles = styles;
-  render = template;
+  render() { return template.call(this); }
 }

@@ -10,5 +10,5 @@ export default class GitStatus extends Component {
   };
 
   styles = styles;
-  render = template;
+  render() { return template.call(this); }
 }
