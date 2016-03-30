@@ -1,5 +1,5 @@
 <rt-require dependency="./diffListEntry/diffListEntry" as="diffListEntry"/>
 
-<div className="{this.styles.default}">
+<div class="{this.styles.default}">
   <diffListEntry rt-repeat="entry in this.props.entries" patch={entry} key={this.getKey(entry)} />
 </div>

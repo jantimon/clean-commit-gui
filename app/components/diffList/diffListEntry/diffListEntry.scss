@@ -13,21 +13,26 @@
   color: #666;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   cursor: default;
-  
+
 }
 
 .isAdded {
+  composes: default;
   color: #20B048;
 }
 .isDeleted {
+  composes: default;
   color: #999999;
 }
 .isModified {
+  composes: default;
   color: #D68806;
 }
 .isRenamed {
+  composes: default;
   color: #D68806;
 }
 .isUntracked {
+  composes: default;
   color: #2048B0;
 }

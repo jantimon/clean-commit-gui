@@ -43,7 +43,7 @@ export default class DiffListEntry extends Component {
         return styles[modifiers[i]];
       }
     }
-    return '';
+    return styles.default;
   }
 
   /**
