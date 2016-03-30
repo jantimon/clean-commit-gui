@@ -1,0 +1,7 @@
+<rt-require dependency="../diffList/diffList" as="diffList"/>
+
+<div class="{this.styles.default}">
+  <diffList entries={this.props.staged} />
+  <hr>
+  <diffList entries={this.props.unstaged} />
+</div>

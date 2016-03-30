@@ -2,19 +2,27 @@
 'use strict';
 
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
       loaders: ['babel-loader'],
-      exclude: /node_modules/
+      include: [path.join(__dirname, 'app')]
     }, {
       test: /\.json$/,
       loader: 'json-loader'
-    }, {
+    },
+    {
+      test: /\.html/,
+      loader: 'react-templates-loader?targetVersion=0.14.0',
+      include: [path.join(__dirname, 'app')]
+    },
+    {
       test: /\.svg$/,
-      loader: 'url-loader?limit=10000'
+      loader: 'url-loader?limit=10000',
+      include: [path.join(__dirname, 'app')]
     }]
   },
   output: {
@@ -24,8 +32,12 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main'],
+    alias: {
+      'any-promise': path.join(__dirname, 'app', 'utils', 'promise.js')
+    }
   },
+  postcss: () => [autoprefixer],
   plugins: [
 
   ],

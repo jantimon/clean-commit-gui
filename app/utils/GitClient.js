@@ -17,7 +17,7 @@ export async function getStagedChanges(repository) {
   return await diff.patches();
 }
 
-export async function getWorkingDirectoryChanges(repository) {
+export async function getWorkingDirectoryDiff(repository) {
   // Get both values asyncronous
   const stagedChangesPromise = getStagedChanges(repository);
   const unstagedChangesPromise = getUnstagedChanges(repository);

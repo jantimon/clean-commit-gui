@@ -24,6 +24,7 @@ config.module.loaders.push({
   loaders: [
     'style-loader',
     'css-loader?sourceMap',
+    'postcss-loader',
     'sass-loader'
   ]
 }, {
@@ -31,6 +32,7 @@ config.module.loaders.push({
   loaders: [
     'style-loader',
     'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+    'postcss-loader',
     'sass-loader'
   ]
 });

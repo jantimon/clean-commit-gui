@@ -4,7 +4,6 @@ $icons: add, conflict, file, folder, modified, moved, new, pull, push, remove, r
   display: inline-block;
   width: 1em;
   height: 1em;
-  -webkit-mask-size: 1em 1em;
   mask-size: 1em 1em;
   vertical-align: middle;
   background: currentColor;
@@ -13,7 +12,6 @@ $icons: add, conflict, file, folder, modified, moved, new, pull, push, remove, r
 @each $icon in $icons {
   .#{$icon} {
     composes: icon;
-    -webkit-mask-image: url(./#{$icon}.svg);
     mask-image: url(./#{$icon}.svg);
   }
 }

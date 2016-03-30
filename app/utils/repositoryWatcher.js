@@ -3,10 +3,10 @@
  * This utils allows to watch the repository for changes
  */
 
-import { getWorkingDirectoryChanges } from './GitClient';
+import { getWorkingDirectoryDiff } from './GitClient';
 
-const gitPollIntervalDuringFocus = 1000;
-const gitPollIntervalDuringBlur = 10000;
+const gitPollIntervalDuringFocus = 5000;
+const gitPollIntervalDuringBlur = 15000;
 const watchedRepositories = {};
 const watchers = [];
 let timer = setInterval(executeWatchers, gitPollIntervalDuringFocus);
@@ -26,7 +26,7 @@ export function watchRepository(repository, callback) {
     if (!watchedRepositories[repositoryPath]) {
       return clearInterval(timer);
     }
-    getWorkingDirectoryChanges(repository).then(({ stagedChanges, unstagedChanges }) => {
+    getWorkingDirectoryDiff(repository).then(({ stagedChanges, unstagedChanges }) => {
       const fingerprint = [
         stagedChanges.map((change) => change.size()).join('-'),
         unstagedChanges.map((change) => change.size()).join('-')
