@@ -1,17 +1,24 @@
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import GitStatus from '../components/gitStatus/gitStatus';
+import GitCommitForm from '../components/gitCommitForm/gitCommitForm';
 import * as GitActions from '../actions/git';
 
-function mapStateToProps(state) {
-  return {
-    staged: state.git.staged,
-    unstaged: state.git.unstaged
-  };
+class GitStatusPage extends Component {
+  render() {
+    return (
+      <div>
+        <GitStatus {...this.props} />
+        <br />
+        <GitCommitForm {...this.props} />
+      </div>
+    );
+  }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(GitActions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(GitStatus);
+export default connect((state) => ({
+  staged: state.git.staged,
+  unstaged: state.git.unstaged,
+  commitizen: state.commitizen.settings
+}), (dispatch) => bindActionCreators(GitActions, dispatch))(GitStatusPage);
