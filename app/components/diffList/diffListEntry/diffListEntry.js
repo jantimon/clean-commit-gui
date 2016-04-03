@@ -12,6 +12,14 @@ const iconMapping = {
   isUntracked: Icons.untracked
 };
 
+const titleMapping = {
+  isAdded: 'new',
+  isDeleted: 'deleted',
+  isModified: 'modified',
+  isRenamed: 'moved',
+  isUntracked: 'new'
+};
+
 export default class DiffListEntry extends Component {
   static propTypes = {
     patch: PropTypes.object.isRequired,
@@ -23,13 +31,9 @@ export default class DiffListEntry extends Component {
    */
   getModifierIcon() {
     const { patch } = this.props;
-    const modifiers = Object.keys(iconMapping);
-    for (let i = modifiers.length; i--;) {
-      if (patch[modifiers[i]]()) {
-        return React.createElement(iconMapping[modifiers[i]]);
-      }
-    }
-    return '';
+    const modifiers = Object.keys(patch.modifiers);
+    const lastModifier = modifiers.length - 1;
+    return lastModifier === -1 ? '' : React.createElement(iconMapping[modifiers[lastModifier]]);
   }
 
   /**
@@ -37,13 +41,9 @@ export default class DiffListEntry extends Component {
    */
   getModifierClassName() {
     const { patch } = this.props;
-    const modifiers = Object.keys(iconMapping);
-    for (let i = modifiers.length; i--;) {
-      if (patch[modifiers[i]]()) {
-        return styles[modifiers[i]];
-      }
-    }
-    return styles.default;
+    const modifiers = Object.keys(patch.modifiers);
+    const lastModifier = modifiers.length - 1;
+    return lastModifier === -1 ? styles.default : styles[modifiers[lastModifier]];
   }
 
   /**
@@ -51,7 +51,27 @@ export default class DiffListEntry extends Component {
    */
   getFilePath() {
     const { patch } = this.props;
-    return patch.newFile().path();
+    return patch.filename;
+  }
+
+  /**
+   * Returns the file subtitle
+   */
+  getFileDetails() {
+    const { patch } = this.props;
+    const modifiers = Object.keys(titleMapping);
+    for (let i = modifiers.length; i--;) {
+      if (patch.modifiers[modifiers[i]]) {
+        const suffix = modifiers[i] === 'isModified' ? ' - ' + this.getChangeAmount() : '';
+        return titleMapping[modifiers[i]] + suffix;
+      }
+    }
+    return '';
+  }
+
+  getChangeAmount() {
+    const { patch } = this.props;
+    return patch.size + ' change' + (patch.size !== 1 ? 's' : '');
   }
 
   styles = styles;

@@ -1,19 +1,48 @@
 .default {
   color: #333;
-  font-size: 14px;
-  padding: 0.5em 0.5em 0.6em;
-  border-bottom: 1px solid #CCCCCC;
+  font-size: 10px;
+  padding: 5px 4px 6px 10px;
+  white-space: nowrap;
+  position: relative;
+  &:after {
+    content: '';
+    bottom: 0;
+    left: 33px;
+    right: 5px;
+    width: auto;
+    border-bottom: 1px solid #DDD;
+    position: absolute;
+  }
+  &:last-child:after {
+    display: none;
+  }
+}
+
+.iconContainer {
+  margin-right: 0.5em;
+  font-size: 16px;
+  vertical-align: top;
+  display: inline-block;
 }
 
 .title {
-  display: inline-block;
+  display: block;
   vertical-align: bottom;
-  font-size: 0.8em;
-  margin-left: 0.5em;
+  font-size: 10px;
+  padding-top: 2px;
   color: #666;
   font-family: monaco, Consolas, 'Lucida Console', monospace;
   cursor: default;
+}
 
+.fileDetails {
+  display: block;
+  opacity: 0.6;
+  font-size: 0.6em;
+}
+
+.fileInformation {
+  display: inline-block;
 }
 
 .isAdded {

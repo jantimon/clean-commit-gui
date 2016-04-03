@@ -1,6 +1,13 @@
 <div class="{this.getModifierClassName()}">
-  {this.getModifierIcon()}
-  <span class="{this.styles.title}">
-    {this.getFilePath()}
+  <span class="{this.styles.iconContainer}">
+    {this.getModifierIcon()}
+  </span>
+  <span class="{this.styles.fileInformation}">
+    <span class="{this.styles.title}">
+      {this.getFilePath()}
+    </span>
+    <span class="{this.styles.fileDetails}">
+      {this.getFileDetails()}
+    </span>
   </span>
 </div>

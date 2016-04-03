@@ -9,7 +9,11 @@ export default class DiffList extends Component {
   };
 
   getKey(patch) {
-    return patch.newFile().path();
+    return patch.id;
+  }
+
+  getEntries() {
+    return this.props.entries;
   }
 
   styles = styles;

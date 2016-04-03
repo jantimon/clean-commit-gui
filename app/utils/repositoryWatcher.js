@@ -28,8 +28,8 @@ export function watchRepository(repository, callback) {
     }
     getWorkingDirectoryDiff(repository).then(({ stagedChanges, unstagedChanges }) => {
       const fingerprint = [
-        stagedChanges.map((change) => change.size()).join('-'),
-        unstagedChanges.map((change) => change.size()).join('-')
+        stagedChanges.map((change) => change.size).join('-'),
+        unstagedChanges.map((change) => change.size).join('-')
       ].join('##');
       if (force || fingerprint !== watchedRepositories[repositoryPath]) {
         watchedRepositories[repositoryPath] = fingerprint;
