@@ -1,5 +1,11 @@
 <rt-require dependency="../diffList/diffList" as="diffList"/>
+<rt-require dependency="material-ui/lib/card/card" as="card"/>
+<rt-require dependency="material-ui/lib/card/card-text" as="cardText"/>
 
-<div class="{this.styles.default}">
-  {this.getForm()}
-</div>
+<card>
+  <cardText>
+    <div class="{this.styles.default}">
+      {this.getForm()}
+    </div>
+  </cardText>
+</card>

@@ -13,6 +13,9 @@ import { setWorkingDirectory } from './actions/git';
 import './app.global.css';
 import { attachDragAndDrop } from './utils/dragndrop';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 const store = configureStore();
 const query = queryString.parse(document.location.search);
 store.dispatch(setWorkingDirectory(path.resolve(query.cwd, query.git)));

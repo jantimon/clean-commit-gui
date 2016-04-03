@@ -1,5 +1,12 @@
 <rt-require dependency="./diffListEntry/diffListEntry" as="diffListEntry"/>
+<rt-require dependency="material-ui/lib/card/card" as="card"/>
+<rt-require dependency="material-ui/lib/card/card-title" as="cardHeader"/>
+<rt-require dependency="material-ui/lib/card/card-text" as="cardText"/>
 
-<div class="{this.styles.default}">
-  <diffListEntry rt-repeat="entry in this.getEntries()" patch={entry} key={this.getKey(entry)} />
-</div>
+<card>
+  <cardText>
+    <div class="{this.styles.default}">
+      <diffListEntry rt-repeat="entry in this.getEntries()" patch={entry} key={this.getKey(entry)} />
+    </div>
+  </cardText>
+</card>
