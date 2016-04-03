@@ -1,5 +1,7 @@
 # clean-commit
 
+![preview](https://raw.githubusercontent.com/jantimon/clean-commit-gui/master/preview.png)
+
 ## Install
 
 First, clone the repo via git:
